@@ -21,6 +21,11 @@
         <div>
             <a href="#"> <i class="fa-solid fa-user-tie"></i> Agent</a>
         </div>
+
+        <div>
+            <a href="{{ route('home') }}"> <i class="fa fa-cogs"></i> Control Panel</a>
+        </div>
+       
     </div>
     <div class="right-panel">
         <div class="grid-item">

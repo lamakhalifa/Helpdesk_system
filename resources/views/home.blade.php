@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-<div class="col-md-9" dir ="rtl">
+<div class="col-md-9">
             <div class="card">
-                <div class="card-header text-center text-light">مستخدمين النظام</div>
+                <div class="card-header text-center text-dark">Registered Users</div>
 
                 <div class="card-body text-center">
                        
@@ -10,11 +10,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">اسم المستخدم</th>
-                                    <th scope="col">الدور</th>
-                                    <th scope="col">صورة المستخدم</th>
-                                    <th scope="col">دور المستخدم</th>
-                                    <th scope="col">تعديل</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Current Role</th>
+                                    <th scope="col">Profile</th>
+                                    <th scope="col">Update User Role</th>
+                                    <th scope="col">Update</th>
                                     
                                 </tr>
                             </thead>
@@ -28,18 +28,18 @@
                                 <td><img src="{{asset($row->avatar)}}" width="80"></td> 
                                
                                 <td><select name="role" class="form-control" required="">
-                                    <option value="" selected="" disabled="">اختر دور المستخدم</option>
+                                    <option value="" selected="" disabled="">Select User Role</option>
                                     @for ($role = 0; $role < count($roles); $role++)
                                          <option value="{{ $roles[$role] }}">{{$roles[$role] }}</option>
                                     @endfor
                                 </select>
                                    
-                                <td><a href="{{route('home.store'),$row->id}}"><button class="btn btn-primary " type="submit">تعديل</button></a></td>
+                                <td><a href="{{route('home.store'),$row->id}}"><button class="btn btn-primary " type="submit">Update</button></a></td>
                              
                                 </tr>
                                 @endforeach
                                 @else
-                                <p>لا يوجد مستخدمين</p>
+                                <p>No Users Registered Yet</p>
                                 @endif
                             </tbody>
                         </table>

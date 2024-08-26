@@ -22,23 +22,28 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request)
+    public function index()
         {
-        $roles = ['Admin', 'Customer','Agent'];
-        $users = User::paginate(10);
-        return view('home',compact('users','roles'));
+       
+        return view('Dashboard');
       
     }
-
-
-    public function store(Request $request){
-        User::insert([
-        //'id'=>$id,
-        'role'=>$request->role,
-        // 'modifiedBy'=> $request->modifiedBy,
-
-        ]);
-
-          return redirect()->route('home');
+    public function AdminHome(Request $request)
+    {
+    $roles = ['Admin', 'Customer','Agent'];
+    $users = User::paginate(10);
+    return view('home',compact('users','roles'));
+  
 }
+
+//     public function store(Request $request){
+//         User::insert([
+//         //'id'=>$id,
+//         'role'=>$request->role,
+//         // 'modifiedBy'=> $request->modifiedBy,
+
+//         ]);
+
+//           return redirect()->route('ControlPanel');
+// }
 }

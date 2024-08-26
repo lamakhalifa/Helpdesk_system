@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Dashboard');
 });
 
 Route::get('/Dashboard', function () {
@@ -23,6 +23,7 @@ Route::get('/Dashboard', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home/store', 'HomeController@store')->name('home.store');
 
+Route::get('/home', 'HomeController@AdminHome')->name('home');
