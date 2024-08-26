@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User; 
+use App\User;
 
 class HomeController extends Controller
 {
@@ -24,16 +24,16 @@ class HomeController extends Controller
      */
     public function index()
         {
-       
-        return view('Dashboard');
-      
+
+        return view('dashboard');
+
     }
     public function AdminHome(Request $request)
     {
     $roles = ['Admin', 'Customer','Agent'];
     $users = User::paginate(10);
     return view('home',compact('users','roles'));
-  
+
 }
 
 public function UpdateProfile()
@@ -43,11 +43,11 @@ return view('UpdateProfile',compact('user'));
 }
 
 //update profile photo
-public function UpdateProfile(Request $request)
-{
-
-return view('UpdateProfile',compact('user'));
-}
+//public function UpdateProfile(Request $request)
+//{
+//
+//return view('UpdateProfile',compact('user'));
+//}
 
 
 //     public function store(Request $request){
