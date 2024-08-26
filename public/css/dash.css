@@ -1,0 +1,279 @@
+body {
+    background-color:#ebebeb; 
+}
+a:hover {
+    text-decoration: none;
+}
+
+.container-dash-page {
+    display: grid;
+    grid-template-columns: 1fr 4fr; 
+    height: 100vh; 
+}
+
+.left-panel {
+    background-color: #0a3736; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 15px;
+    color: white;
+}
+.left-panel div {
+    padding: 5px 15px;
+}
+
+.left-panel a {
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    color: white;
+}
+
+.left-panel a i {
+    padding-right: 15px;
+}
+
+
+.left-panel .brand {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bolder;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.right-panel {
+    display: grid;
+    grid-template-rows:  100px 50px 150px 1fr; 
+    gap: 10px;
+    height: 100vh; 
+    font-size: 1.5em;
+    padding: 20px;
+    width: 79vw;
+}
+
+.right-panel .grid-item , .grid-item3 , .grid-item4 , .grid-item5 {
+display: flex;
+position: relative;
+width: 77vw;
+}
+
+.right-panel h1 {
+    color: black;
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    font-weight: bolder;
+}
+
+.ticket-btn {
+    background: #fd2976;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 12px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    font-size: small;
+    position: relative;
+    max-height: 35px;
+    left: 65vw;
+
+}
+.new  {
+    left: 880px;
+}
+
+.ticket-btn:hover {
+    background: #ab1e51;
+}
+.right-panel > div:nth-of-type(2){
+    position: relative;
+    align-items: flex-end;
+    padding-left: 25px;
+    color: black;
+    border-bottom: 1px solid gray;
+    gap: 40px;
+}
+
+.right-panel > div:nth-of-type(2) > a {
+    font-weight: bolder;
+    color: black;
+}
+
+.grid-item3 > div{
+    font-size: medium;
+    padding-left: 35px;
+}
+
+.grid-item3 a {
+    color: gray;
+}
+
+.grid-item4 {
+    border-bottom: 1px solid gray;
+}
+
+.grid-item4 > h5 {
+    font-weight: bolder;
+}
+ .item {
+    flex: 1;
+    padding-left: 10px;
+  
+ }
+.grid-item5 {
+    margin-top: 15px;
+}
+
+.header-cards {
+    display: flex;
+    border-bottom: 1px solid gray;
+}
+
+.header-item {
+    flex: 1;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+
+.header-item:last-child {
+    border-right: none;
+}
+
+.content {
+    width: 77vw;
+}
+.wrapper {
+    width: min(900px, 100% - 3rem);
+}
+
+.table-contaier {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table-contaier::-webkit-scrollbar {
+    display: none;
+}
+
+table {
+    width: 100%;
+}
+th {
+    text-align: left;
+    border-bottom: 1px solid gray;
+}
+th ,td {
+    padding: 1rem;
+}
+.card-container::-webkit-scrollbar {
+    display: none;
+}
+
+.ticket-name {
+    margin: 0;
+    font-weight: 900;
+}
+.ticket-creator {
+    margin: 0;
+    color: #ba7d31;
+}
+
+.time {
+    display: flex;
+    font-size: 11px;
+}
+
+.active {
+    border-bottom: 3px solid #fd2976;
+    border-radius: 2px;
+    padding: 0 10px;
+}
+
+.activity {
+    background-color: black;
+    color: white;
+    max-width: 65px;
+    padding: 5px 10px;
+    border-radius: 5px
+}
+
+/* #content2 > .grid-item {
+    justify-content: flex-end;
+} */
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #e3e6f0;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+    height: 100% !important;
+    padding-top: 0.5rem;
+    margin-top: 15px;
+  }
+
+  .row {
+    display: flex;
+  }
+
+  .title-color{
+    color: #fd2976;
+  }
+  .border-left-primary {
+    border-left: 0.25rem solid #fd2976 !important;
+  }
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+  }
+
+  .table {
+    margin-top: 55px;
+  }
+    @media (max-width: 913px) {
+        .new {
+            left: 485px;
+        }
+    }
+
+    @media (max-width: 431px) {
+        .container-dash-page {
+            grid-template-columns: 1fr; 
+            grid-template-rows: auto auto auto 1fr;
+            gap: 0;
+        }
+
+        .Dashboard-header{
+            display: contents;
+        }
+        .right-panel > div:nth-of-type(2) > a {
+            font-size: 20px;
+        }
+        .left-panel {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+    
+        .right-panel {
+            height: 124vh;
+            width: 100vw;
+        }
+    .table-container {
+        max-width: 45%;
+    }
+    .new {
+        left: 277px;
+    }
+    }
