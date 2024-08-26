@@ -36,6 +36,20 @@ class HomeController extends Controller
   
 }
 
+public function UpdateProfile()
+{
+$user=auth()->user();
+return view('UpdateProfile',compact('user'));
+}
+
+//update profile photo
+public function UpdateProfile(Request $request)
+{
+
+return view('UpdateProfile',compact('user'));
+}
+
+
 //     public function store(Request $request){
 //         User::insert([
 //         //'id'=>$id,
