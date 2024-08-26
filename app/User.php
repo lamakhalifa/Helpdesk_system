@@ -19,7 +19,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'avatar',
         'role',
     ];
 
@@ -39,9 +38,11 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-    ];
-    ////relation Between User and Tickets
-    // public function userToTickerts(){
-    //     return $this->belongsToMany('Ticket');
-    // }
+    ]; // phpstorm
+    public function tickets(){
+        $column = $this->role === 'admin' || $this->role === 'agent' ?
+        'agent_id' : 'customer_id';
+
+        return $this->hasMany(Ticket::class, $column);
+    }
 }

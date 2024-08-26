@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
+
+
     protected $fillable = [
         'title',
         'content',
@@ -19,4 +21,8 @@ class Ticket extends Model
     public function agent(){
         return $this->belongsTo(User::class,'agent_id');
     }
+
+//    public function category(){
+//        return $this->belongsTo(Category::class);
+//    }
 }
