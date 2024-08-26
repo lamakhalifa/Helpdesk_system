@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
-
+//testing to new brnach
     /**
      * The attributes that are mass assignable.
      *
