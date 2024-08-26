@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User; 
 
 class HomeController extends Controller
 {
@@ -21,8 +22,23 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('home');
+    public function index(Request $request)
+        {
+        $roles = ['Admin', 'Customer','Agent'];
+        $users = User::paginate(10);
+        return view('home',compact('users','roles'));
+      
     }
+
+
+    public function store(Request $request){
+        User::insert([
+        //'id'=>$id,
+        'role'=>$request->role,
+        // 'modifiedBy'=> $request->modifiedBy,
+
+        ]);
+
+          return redirect()->route('home');
+}
 }
