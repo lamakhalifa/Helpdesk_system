@@ -18,11 +18,11 @@ class CreateTicketsTable extends Migration
             $table->string('title');
             $table->text('content');
             $table->unsignedBigInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('users');
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->unsignedBigInteger('agent_id');
-            $table->foreign('agent_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('agent_id')->references('id')->on('users');
             $table->timestamps();
 
         });
