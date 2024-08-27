@@ -43,12 +43,19 @@ return view('UpdateProfile',compact('user'));
 }
 
 //update profile photo
+// <<<<<<< Updated upstream
 //public function UpdateProfile(Request $request)
 //{
 //
 //return view('UpdateProfile',compact('user'));
 //}
+// =======
+// public function UpdateProfile(Request $request)
+// {
+// >>>>>>> Stashed changes
 
+// return view('UpdateProfile',compact('user'));
+// }
 
 //     public function store(Request $request){
 //         User::insert([

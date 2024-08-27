@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +30,4 @@ Route::post('/home/store', 'HomeController@store')->name('home.store');
 
 Route::get('/home', 'HomeController@AdminHome')->name('home');
 Route::get('/UpdateProfile', 'HomeController@UpdateProfile')->name('UpdateProfile');
+Route::resource('user', 'UserController');
