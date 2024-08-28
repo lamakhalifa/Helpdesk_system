@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,16 +19,23 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('/Dashboard', function () {
     return view('Dashboard');
+});
+
+Route::get('/customers', function () {
+    return view('customers');
 });
 
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/home/store', 'HomeController@store')->name('home.store');
-
+//Route::post('/home/store', 'HomeController@store')->name('home.store');
 Route::get('/home', 'HomeController@AdminHome')->name('home');
 Route::get('/UpdateProfile', 'HomeController@UpdateProfile')->name('UpdateProfile');
 Route::resource('user', 'UserController');
+Route::resource('tickets', 'TicketController');
+//Route::resource('users', 'UsersController', [
+//    'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
+//]);
+//Route::resource('/tickets/create', 'TicketController@create')->name('tickets.create');
