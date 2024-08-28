@@ -27,4 +27,12 @@ Auth::routes();
 Route::post('/home/store', 'HomeController@store')->name('home.store');
 
 Route::get('/home', 'HomeController@AdminHome')->name('home');
-Route::get('/UpdateProfile', 'HomeController@UpdateProfile')->name('UpdateProfile');
+
+//Ticket Routes
+Route::get('/ticket/create', 'TicketController@create')->name('ticket.create');
+Route::post('/ticket/store', 'TicketController@store')->name('ticket.store');
+Route::get('/ticket/show', 'TicketController@index')->name('ticket.index');
+Route::get('/ticket/{id}', 'TicketController@delete')->name('ticket.delete');
+Route::get('/ticket/edit/{id}', 'TicketController@edit')->name('ticket.edit');
+Route::post('/ticket/update/{id}', 'TicketController@update')->name('ticket.update');
+Route::get('/ticket/show/{id}','TicketController@details')->name('ticket.details');
