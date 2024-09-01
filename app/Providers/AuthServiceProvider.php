@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        User::class => UserPolicy::class,
     ];
 
     /**
@@ -23,14 +24,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
-
-        Gate::define('update-profile', function (User $user, User $profileUser) {
-            return $user->id === $profileUser->id;
-        });
-
-        Gate::define('delete-user', function (User $user) {
-            return $user->role === 'admin';
-        });
+        //
     }
 }
