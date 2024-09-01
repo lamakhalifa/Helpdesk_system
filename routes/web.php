@@ -33,8 +33,9 @@ Auth::routes();
 //Route::post('/home/store', 'HomeController@store')->name('home.store');
 Route::get('/home', 'HomeController@AdminHome')->name('home');
 Route::get('/UpdateProfile', 'HomeController@UpdateProfile')->name('UpdateProfile');
-Route::resource('user', 'UserController');
+Route::resource('users', 'UserController');
 Route::resource('tickets', 'TicketController');
+// Route::get('/tickets/create', [UserController::class, 'index']);
 //Route::resource('users', 'UsersController', [
 //    'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
 //]);
