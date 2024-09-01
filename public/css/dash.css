@@ -124,6 +124,7 @@ width: 77vw;
  }
 .grid-item5 {
     margin-top: 15px;
+    width: max-content;
 }
 
 .header-cards {
@@ -241,6 +242,29 @@ th ,td {
   .table {
     margin-top: 55px;
   }
+
+  .frmfilter{
+    display: flex;
+    justify-content: space-between;
+
+  }
+
+  .frmfilter div:first-child{
+    display: ruby;
+  }
+
+  .edit-delete-btn {
+    display: flex;
+  }
+
+  .left-zero{
+    left: 0;
+  }
+  .btn-danger{
+    margin-left: 5px;
+  }
+
+
     @media (max-width: 913px) {
         .new {
             left: 485px;
