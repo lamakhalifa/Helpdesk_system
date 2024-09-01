@@ -15,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-       Ticket::class => TicketPolicy::class,
+        Ticket::class => TicketPolicy::class,
         //'App\Models\Ticket' => 'App\Policies\TicketPolicy',
         // 'App\Model' => 'App\Policies\ModelPolicy',
     ];
@@ -37,91 +37,6 @@ class AuthServiceProvider extends ServiceProvider
         //     return $user->role === 'admin';
         // });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

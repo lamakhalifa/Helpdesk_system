@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 // use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TicketController;
@@ -35,17 +36,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 //Ticket Routes
-//  Route::get('/ticket/create', 'TicketController@create')->name('tickets.create');
-//  Route::post('/ticket/store', 'TicketController@store')->name('tickets.store');
-//  Route::get('/ticket/show', 'TicketController@index')->name('tickets.index');
- //Route::get('/ticket/{id}', 'TicketController@destroy')->name('ticket.destroy');
- //Route::get('/ticket/edit/{id}', 'TicketController@edit')->name('ticket.edit');
- //Route::post('/ticket/update/{id}', 'TicketController@update')->name('ticket.update');
- //Route::get('/ticket/show/{id}','TicketController@details')->name('ticket.show');
-
-//Route::get('/UpdateProfile', 'HomeController@UpdateProfile')->name('UpdateProfile');
-//Route::resource('user', 'UserController');
 Route::resource('tickets', 'TicketController');
+
+Route::resource('user', 'UserController');
+
 //Route::resource('users', 'UsersController', [
 //    'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
 //]);

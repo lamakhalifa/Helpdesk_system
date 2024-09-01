@@ -15,14 +15,19 @@ class Ticket extends Model
         'category_id',
         'agent_id',
     ];
-    public function customer(){
-        return $this->belongsTo(User::class,'customer_id');
-    }
-    public function agent(){
-        return $this->belongsTo(User::class,'agent_id');
+
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'customer_id');
     }
 
-   public function category(){
-       return $this->belongsTo(Category::class,'category_id');
-   }
+    public function agent()
+    {
+        return $this->belongsTo(User::class, 'agent_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }
