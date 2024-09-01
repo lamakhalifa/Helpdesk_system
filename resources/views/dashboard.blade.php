@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="{{ asset('js/chart-area-demo.js') }}" defer></script>
+<!-- <script src="{{ asset('js/chart-area-demo.js') }}" defer></script> -->
 <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
 
 <div class="container-dash-page">
