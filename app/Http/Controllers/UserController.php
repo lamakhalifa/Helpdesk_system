@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -13,12 +15,19 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $agents = User::where('role', 'agent')->get();
-        $customers = User::where('role', 'customer')->get();
+        $this->authorize('view',$request->user());
 
-        return view('/', compact('agents', 'customers'));
+        if ($request['role'] == 'agent') {
+            $users = User::where('role', 'agent')->get();
+        } elseif ($request['role'] == 'customer') {
+            $users = User::where('role', 'customer')->get();
+        } else {
+            $users = User::all();
+        }
+
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -28,7 +37,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('view',Auth::user());
+
+        return view('users.create');
     }
 
     /**
@@ -39,7 +50,29 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => [
+            'required',
+            'string',
+            'min:8', 
+            'confirmed', 
+            'regex:/[a-z]/', 
+            'regex:/[A-Z]/',
+            'regex:/[0-9]/', 
+            'regex:/[@$!%*?&]/',
+        ],
+        ]);
+
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'role' => $request['role'],
+        ]);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -61,11 +94,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (Gate::denies('update-profile', $user)) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        return view('/',compact('user'));
+        $this->authorize('view',$user);
+        return view('users.update', compact('user'));
     }
 
     /**
@@ -77,8 +107,9 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $this->authorize('update', $user);
         $user->update($request->all());
-        return redirect()->back();
+        return redirect()->route('users.index');
     }
 
     /**
@@ -89,12 +120,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if (Gate::denies('delete-user')) {
-        return abort(401);
-    }
-
+        $this->authorize('delete', $user);
         $user->delete();
-        cache()->forget('users');
         return redirect()->back();
     }
 }
