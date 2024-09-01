@@ -68,7 +68,7 @@
 
 
 
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <input id="role" type="text" class="form-control @error('role') is-invalid @enderror" name="role" value="{{ old('role') }}" required autocomplete="role" autofocus>
     
                                     @error('role')
@@ -76,7 +76,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div>
+                                </div> -->
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

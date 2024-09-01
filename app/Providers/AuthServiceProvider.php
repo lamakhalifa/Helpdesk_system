@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
+use App\Ticket;
+use App\Policies\TicketPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,6 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+       Ticket::class => TicketPolicy::class,
+        //'App\Models\Ticket' => 'App\Policies\TicketPolicy',
         // 'App\Model' => 'App\Policies\ModelPolicy',
     ];
 
@@ -25,12 +29,99 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('update-profile', function (User $user, User $profileUser) {
-            return $user->id === $profileUser->id;
-        });
+        // Gate::define('update-profile', function (User $user, User $profileUser) {
+        //     return $user->id === $profileUser->id;
+        // });
 
-        Gate::define('delete-user', function (User $user) {
-            return $user->role === 'admin';
-        });
+        // Gate::define('delete-user', function (User $user) {
+        //     return $user->role === 'admin';
+        // });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
