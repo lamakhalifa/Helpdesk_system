@@ -2,7 +2,10 @@
 @section('content')
     <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
     <script src="{{ asset('js/chart-area-demo.js') }}" defer></script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d
     <div class="container-dash-page">
         <div class="left-panel">
             <div class="brand">
@@ -24,6 +27,7 @@
         <div class="right-panel">
             <div class="grid-item">
                 <h1>Users </h1>
+<<<<<<< HEAD
                 <a href="{{ route('users.create') }}"><button class="new ticket-btn">new User</button></a>
             </div>
             <div class="grid-item">
@@ -52,6 +56,19 @@
                     <div class="wrapper">
                         <div class="table-contaier">
                             @if (count($users) > 0)
+=======
+                <a href="{{route('users.create')}}"><button class="new ticket-btn">new User</button></a>
+            </div>
+            <div class="grid-item">
+                <a href="#" class="tab active" data-target="content1">Users</a>
+                <!--a href="#" class="tab" data-target="content2">Users</a-->
+            </div>
+            <div class="content" id="content1">
+                <div class="grid-item5">
+                    <div class="wrapper">
+                        <div class="table-contaier">
+                            @if(count($users)>0)
+>>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d
                                 <table>
                                     <tr>
                                         <th>#</th>
@@ -62,6 +79,7 @@
                                         <th>Action</th>
                                     </tr>
                                     <tbody>
+<<<<<<< HEAD
                                         @foreach ($users as $row)
                                             <tr>
                                                 <td scope="row">{{ $row->id }}</td>
@@ -93,11 +111,36 @@
                                         <p>No Users Yet</p>
                             @endif
                             </tbody>
+=======
+                                        @foreach($users as $row)
+                                            <tr>
+                                                <td scope="row">{{$row->id }}</td>
+                                                <td class="ticket-creator">{{$row->name}}</td>
+                                                <td >{{$row->email}}</td>
+                                                <td>{{$row->role}}</td>
+                                                <td>{{$row->created_at}}</td>
+                                                <td>
+                                                    <form action="{{route('users.destroy',$row->id)}}" method="post">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <a href=""><button class="btn btn-primary " type="submit">Update</button></a>
+                                                        <button class="btn btn-danger" onclick="return confirm('{{__('Are you sure you want to delete this row?')}}')"  type="submit">Delete</button>
+                                                    </form>
+                                                    <a href="{{route('users.destroy',$row->id)}}"></a>
+                                                </td>
+                                            </tr>
+                                    @endforeach
+                                @else
+                                    <p>No Users Yet</p>
+                            @endif
+                                </tbody>
+>>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
 
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
@@ -124,3 +167,29 @@
 
 
     @endsection
+=======
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                const tabs = document.querySelectorAll('a.tab');
+                const contents = document.querySelectorAll('.content');
+
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', function(event) {
+                        event.preventDefault();
+
+                        tabs.forEach(t => t.classList.remove('active'));
+                        contents.forEach(c => c.style.display = 'none');
+
+                        this.classList.add('active');
+
+                        const targetId = this.getAttribute('data-target');
+                        document.getElementById(targetId).style.display = 'block';
+                    });
+                });
+            });
+        </script>
+
+    </div>
+
+@endsection
+>>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d
