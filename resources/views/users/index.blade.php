@@ -2,10 +2,7 @@
 @section('content')
     <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
     <script src="{{ asset('js/chart-area-demo.js') }}" defer></script>
-<<<<<<< HEAD
 
-=======
->>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d
     <div class="container-dash-page">
         <div class="left-panel">
             <div class="brand">
@@ -27,7 +24,7 @@
         <div class="right-panel">
             <div class="grid-item">
                 <h1>Users </h1>
-<<<<<<< HEAD
+
                 <a href="{{ route('users.create') }}"><button class="new ticket-btn">new User</button></a>
             </div>
             <div class="grid-item">
@@ -56,7 +53,7 @@
                     <div class="wrapper">
                         <div class="table-contaier">
                             @if (count($users) > 0)
-=======
+
                 <a href="{{route('users.create')}}"><button class="new ticket-btn">new User</button></a>
             </div>
             <div class="grid-item">
@@ -68,7 +65,7 @@
                     <div class="wrapper">
                         <div class="table-contaier">
                             @if(count($users)>0)
->>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d
+
                                 <table>
                                     <tr>
                                         <th>#</th>
@@ -79,7 +76,7 @@
                                         <th>Action</th>
                                     </tr>
                                     <tbody>
-<<<<<<< HEAD
+
                                         @foreach ($users as $row)
                                             <tr>
                                                 <td scope="row">{{ $row->id }}</td>
@@ -111,7 +108,7 @@
                                         <p>No Users Yet</p>
                             @endif
                             </tbody>
-=======
+
                                         @foreach($users as $row)
                                             <tr>
                                                 <td scope="row">{{$row->id }}</td>
@@ -134,13 +131,12 @@
                                     <p>No Users Yet</p>
                             @endif
                                 </tbody>
->>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d
+
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
 
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
@@ -167,7 +163,7 @@
 
 
     @endsection
-=======
+
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                 const tabs = document.querySelectorAll('a.tab');
@@ -192,4 +188,3 @@
     </div>
 
 @endsection
->>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d

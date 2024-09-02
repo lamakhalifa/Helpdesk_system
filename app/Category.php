@@ -9,7 +9,9 @@ class category extends Model
     protected $fillable = [
         'title'
     ];
-    public function tickets(){
-       return $this->belongsTo(Category::class);
+
+    public function tickets()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <div class="form-group">
     <div class="form-group">
         <div class="form-group">
@@ -36,7 +36,7 @@
         <div class="form-group">
             <button class="ticket-btn left-zaro" type="submit">{{ __('Save') }}</button>
         </div>
-=======
+
 @csrf
     <div class="form-group">
         <label for="userName">{{__('User name')}}</label>
@@ -64,4 +64,3 @@
         <button class="ticket-btn">{{__('Save')}}</button>
     </div>
 
->>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d

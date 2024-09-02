@@ -1,5 +1,5 @@
 @extends('layouts.app')
-<<<<<<< HEAD
+
 @section('title', __('Edit User'))
 
 @section('content')
@@ -15,7 +15,7 @@
             @include('users._form')
         </form>
     </div>
-=======
+
 @section('title',__('Create ticket'))
     @section('content')
     <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
@@ -25,5 +25,5 @@
         @method('PATCH')
         @include('users._form')
     </form>
->>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d
+
 @endsection

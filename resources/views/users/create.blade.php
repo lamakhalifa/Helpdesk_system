@@ -1,5 +1,5 @@
 @extends('layouts.app')
-<<<<<<< HEAD
+
 @section('title', __('Create New User'))
 
 @section('content')
@@ -14,7 +14,7 @@
             @include('users._form')
         </form>
     </div>
-=======
+
 @section('title',__('Create New User'))
     @section('content')
     <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
@@ -24,5 +24,5 @@
         @include('users._form')
     </form>
 
->>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d
+
 @endsection

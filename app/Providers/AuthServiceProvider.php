@@ -15,7 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-       Ticket::class => TicketPolicy::class,
+
+        Ticket::class => TicketPolicy::class,
         //'App\Models\Ticket' => 'App\Policies\TicketPolicy',
         // 'App\Model' => 'App\Policies\ModelPolicy',
         User::class => UserPolicy::class,
@@ -28,9 +29,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-<<<<<<< HEAD
+
         //
-=======
+
         $this->registerPolicies();
 
         // Gate::define('update-profile', function (User $user, User $profileUser) {
@@ -40,7 +41,7 @@ class AuthServiceProvider extends ServiceProvider
         // Gate::define('delete-user', function (User $user) {
         //     return $user->role === 'admin';
         // });
->>>>>>> 10352d4521f7e77bb8a793ddeb7ade807033514d
+
     }
 
 
@@ -129,4 +130,9 @@ class AuthServiceProvider extends ServiceProvider
 
 
 
+=======
+    }
+
+
+>>>>>>> 3236a865ff4325b1625b124cc94436bf496f7d51
 }
