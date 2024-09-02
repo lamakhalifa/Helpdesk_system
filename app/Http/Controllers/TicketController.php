@@ -32,16 +32,19 @@ class TicketController extends Controller
         return view('tickets.create', compact('cats'));
     }
 
-    public function store(Request $request)
-    {
-        $this->authorize('create', Ticket::class);
-        $request->validate([
+    private function validate(Request $request){
+        return $request->validate([
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|min:3|max:40',
             'content' => 'required|string|min:3|max:500',
             'customer_email' => 'required|email|exists:users,email',
             'agent_email' => 'required|email|exists:users,email',
         ]);
+    }
+    public function store(Request $request)
+    {
+        $this->authorize('create', Ticket::class);
+        $this->validate($request);
 
         // Find the customer and agent by their email addresses
         $customer = User::where('email', $request->customer_email)->first();
@@ -75,7 +78,6 @@ class TicketController extends Controller
     public function edit(Ticket $ticket)
     {
         $this->authorize('update', $ticket);
-        $ticket = Ticket::find($ticket->id);
         $cats = Category::latest()->get();
         return view('tickets.edit', compact('ticket', 'cats'));
     }
@@ -84,13 +86,7 @@ class TicketController extends Controller
     public function update(Request $request, Ticket $ticket)
     {
         $this->authorize('update', $ticket);
-        $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'title' => 'required|string|min:3|max:40',
-            'content' => 'required|string|min:3|max:500',
-            'customer_email' => 'required|email|exists:users,email',
-            'agent_email' => 'required|email|exists:users,email',
-        ]);
+        $this->validate($request);
 
         // Find the customer and agent by their email addresses
         $customer = User::where('email', $request->customer_email)->first();
@@ -127,9 +123,8 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket)
     {
-        $ticket = Ticket::find($ticket->id);
-        $cat = Category::find($ticket->category_id);
-        return view('tickets.details', compact('ticket', 'cat'));
+        $this->authorize('view', $ticket);
+        return view('tickets.details', compact('ticket'));
     }
 
 }
