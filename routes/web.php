@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,9 +40,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('tickets', 'TicketController');
 
 Route::resource('user', 'UserController');
+//Category Routes
+Route::resource('category', 'CategoryController');
 
-//Route::resource('users', 'UsersController', [
-//    'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
-//]);
-//Route::resource('/tickets/create', 'TicketController@create')->name('tickets.create');
 
