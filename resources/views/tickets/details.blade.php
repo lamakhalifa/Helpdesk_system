@@ -11,7 +11,7 @@
                  <div class="card-body text-left">
                      <div class="row">
                         <div class="col-md-6">
-                             <p><h3> <strong style="color: seagreen ; font-size: 22px  ">Ticket Category</strong>{{ $cat->title }}</h3></p>
+                             <p><h3> <strong style="color: seagreen ; font-size: 22px  ">Ticket Category</strong>{{ $ticket->category->title}}</h3></p>
 
                              <p>
                              <h3> <strong style="color: seagreen ; font-size: 22px "> Title

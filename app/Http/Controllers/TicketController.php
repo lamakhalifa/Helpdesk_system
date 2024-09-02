@@ -6,7 +6,7 @@ use App\Category;
 use App\User;
 use App\Ticket;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+//use Illuminate\Support\Facades\Gate;
 
 
 class TicketController extends Controller
@@ -18,11 +18,28 @@ class TicketController extends Controller
 
     public function index()
     {
+        $user = auth()->user();
+    
+        // Check if the user is authorized to view any tickets
         $this->authorize('viewAny', Ticket::class);
+    
+        if ($user->role === 'admin') {
+            // Admins can view all tickets
+            $tickets = Ticket::with(['customer', 'category', 'agent'])->paginate(50);
+        } elseif ($user->role === 'agent') {
 
-        $tickets = Ticket::with(['customer', 'category', 'agent'])->paginate(50);
+            // Agents can only view tickets assigned to them
+            $tickets = Ticket::where('agent_id', $user->id)
+                             ->with(['customer', 'category', 'agent'])
+                             ->paginate(50);
+        } else {
+            // Handle cases for other roles or deny access
+            abort(403, 'Unauthorized action.');
+        }
+    
         return view('tickets.index', compact('tickets'));
     }
+    
 
     public function create()
     {
@@ -32,7 +49,7 @@ class TicketController extends Controller
         return view('tickets.create', compact('cats'));
     }
 
-    private function validate(Request $request){
+    private function validateTicket(Request $request){
         return $request->validate([
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|min:3|max:40',
@@ -44,7 +61,7 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Ticket::class);
-        $this->validate($request);
+        $this->validateTicket($request);
 
         // Find the customer and agent by their email addresses
         $customer = User::where('email', $request->customer_email)->first();
@@ -86,7 +103,7 @@ class TicketController extends Controller
     public function update(Request $request, Ticket $ticket)
     {
         $this->authorize('update', $ticket);
-        $this->validate($request);
+        $this->validateTicket($request);
 
         // Find the customer and agent by their email addresses
         $customer = User::where('email', $request->customer_email)->first();
