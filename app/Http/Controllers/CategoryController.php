@@ -38,8 +38,9 @@ class CategoryController extends Controller
     {
         if((Auth::user()->role == 'customer') ){
             return abort(403);
-        }else
-             return view('categories.create');
+        }else{
+            return view('categories.create');
+        }
 
     }
     /**
@@ -88,8 +89,7 @@ class CategoryController extends Controller
         if((Auth::user()->role == 'customer') ){
             return abort(403);
         }else{
-            $categories = Category::find($category->id);
-            return view('categories.update', compact('categories'));
+            return view('categories.update', compact('category'));
         }
     }
 
@@ -110,7 +110,6 @@ class CategoryController extends Controller
                 'title' => 'required|max:50'
             ]);
             // update category title
-            $category = Category::find($category->id);
             $category->update([
                 'title' => $request->title
             ]);
@@ -126,6 +125,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        // TODO: add policy
         $category->delete();
         return redirect()->route('category.index');
     }
