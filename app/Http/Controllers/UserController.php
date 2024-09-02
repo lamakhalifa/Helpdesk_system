@@ -17,11 +17,11 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view',$request->user());
+        $this->authorize('view', User::class);
 
-        if ($request['role'] == 'agent') {
+        if ($request['role'] === 'agent') {
             $users = User::where('role', 'agent')->get();
-        } elseif ($request['role'] == 'customer') {
+        } elseif ($request['role'] === 'customer') {
             $users = User::where('role', 'customer')->get();
         } else {
             $users = User::all();
@@ -37,7 +37,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('view',Auth::user());
+        $this->authorize('create', User::class);
 
         return view('users.create');
     }
@@ -45,24 +45,26 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        $this->validate('create', User::class);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => [
-            'required',
-            'string',
-            'min:8', 
-            'confirmed', 
-            'regex:/[a-z]/', 
-            'regex:/[A-Z]/',
-            'regex:/[0-9]/', 
-            'regex:/[@$!%*?&]/',
-        ],
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*?&]/',
+            ],
         ]);
 
         User::create([
@@ -78,7 +80,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
@@ -89,39 +91,46 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
     {
-        $this->authorize('view',$user);
+        $this->authorize('update', $user);
         return view('users.update', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param \Illuminate\Http\Request $request
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
     {
         $this->authorize('update', $user);
-        $user->update($request->all());
+
+        $request['password'] = Hash::make($request['password']);
+        $user->passoword = $request['password'];
+        $user->name = $request['name'];
+        $user->email = $request['email'];
+        $user->role = $request['role'];
+        $user->save();
+
         return redirect()->route('users.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
         $this->authorize('delete', $user);
         $user->delete();
-        return redirect()->back();
+        return redirect()->route('users.index');
     }
 }
