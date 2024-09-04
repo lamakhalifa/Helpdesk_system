@@ -10,11 +10,7 @@ class Category extends Model
         'title'
     ];
 
-//    public function tickets()
-//    {
-//        return $this->belongsTo(Category::class);
-//    }
-    public function categories()
+    public function tickets()
     {
         return $this->hasMany(Ticket::class);
     }

@@ -45,6 +45,6 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class, $column);
     }
     public function comments(){
-        return $this->hasMany(Comment::class, 'agent_id');
+        return $this->hasMany(Comment::class, 'user_id');
     }
 }
