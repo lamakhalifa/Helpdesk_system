@@ -2,11 +2,100 @@
 
 namespace App\Policies;
 
+use App\Category;
 use App\User;
-use App\Ticket;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CategoryPolicy
 {
     use HandlesAuthorization;
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+
+    private function isAdmin(User $user)
+    {
+        return $user->role === 'admin'; // Check if user's role is 'admin'
+    }
+
+    public function viewAny(User $user)
+    {
+        //
+        return $this->isAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Category  $category
+     * @return mixed
+     */
+    public function view(User $user, Category $category)
+    {
+        return $this->isAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can create models.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function create(User $user)
+    {
+        return $this->isAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Category  $category
+     * @return mixed
+     */
+    public function update(User $user, Category $category)
+    {
+        return $this->isAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Category  $category
+     * @return mixed
+     */
+    public function delete(User $user, Category $category)
+    {
+        return $this->isAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Category  $category
+     * @return mixed
+     */
+    public function restore(User $user, Category $category)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Category  $category
+     * @return mixed
+     */
+    public function forceDelete(User $user, Category $category)
+    {
+        //
+    }
 }
