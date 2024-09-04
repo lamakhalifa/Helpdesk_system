@@ -45,7 +45,7 @@
                                     </tr>
                                     <tbody>
                                         @foreach($categories as $row)
-                                            <?php $ticketCount = Ticket::where('category_id', $row->id)->count(); ?>
+                                            <?php $ticketCount = $row->tickets_count ?>
                                             <tr>
                                                 <td >{{$row->id }}</td>
                                                 <td class="ticket-creator">{{$row->title}}</td>

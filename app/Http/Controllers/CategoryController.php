@@ -21,9 +21,8 @@ class CategoryController extends Controller
     public function index()
     {
         $this->authorize('viewAny',Category::class);
-        $categories = Category::orderBy('id','DESC')->paginate(20);
+        $categories = Category::withCount('tickets')->orderBy('id','DESC')->paginate(20);
         return view('categories.index', compact('categories'));
-
     }
 
     /**
