@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-//use App\Ticket;
+use App\Ticket;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+//use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -20,12 +20,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        if((Auth::user()->role == 'customer') ){
-            return abort(403);
-        }else{
-            $categories = Category::all();
-            return view('categories.index', compact('categories'));
-        }
+        $this->authorize('viewAny',Category::class);
+        $categories = Category::orderBy('id','DESC')->paginate(20);
+        return view('categories.index', compact('categories'));
 
     }
 
@@ -36,11 +33,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        if((Auth::user()->role == 'customer') ){
-            return abort(403);
-        }else{
-            return view('categories.create');
-        }
+        $this->authorize('create',Category::class);
+        return view('categories.create');
 
     }
     /**
@@ -51,19 +45,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if((Auth::user()->role == 'customer') ){
-            return abort(403);
-        } else {
+            $this->authorize('create',Category::class);
             //validate input
             $request->validate([
-                'title' => 'required|max:50'
+                'title' => 'required|string|unique:categories,title|max:20'
             ]);
             // create new category after validate input
             Category::create([
                 'title' => $request->title
             ]);
-            return redirect()->route('category.index');
-        }
+            return redirect()->route('categories.index');
+
     }
 
 
@@ -86,11 +78,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        if((Auth::user()->role == 'customer') ){
-            return abort(403);
-        }else{
-            return view('categories.update', compact('category'));
-        }
+        $this->authorize('update', $category);
+        return view('categories.edit', compact('category'));
+
     }
 
     /**
@@ -102,19 +92,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        if((Auth::user()->role == 'customer') ){
-            return abort(403);
-        }else{
+         $this->authorize('update', $category);
             //validate input
             $request->validate([
-                'title' => 'required|max:50'
+                'title' => 'required|string|unique:categories,title|max:20'
             ]);
             // update category title
             $category->update([
                 'title' => $request->title
             ]);
-            return redirect()->route('category.index')->with('success', 'Category updated successfully!');
-        }
+            return redirect()->route('categories.index')->with('success', 'Category updated successfully!');
     }
 
     /**
@@ -125,8 +112,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        // TODO: add policy
+        $this->authorize('delete', $category);
         $category->delete();
-        return redirect()->route('category.index');
+        return redirect()->route('categories.index');
     }
 }
