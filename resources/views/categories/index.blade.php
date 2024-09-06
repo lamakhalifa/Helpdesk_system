@@ -1,3 +1,4 @@
+@php use App\Ticket; @endphp
 @extends('layouts.app')
 @section('content')
     <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
@@ -23,7 +24,7 @@
         <div class="right-panel">
             <div class="grid-item">
                 <h1>Categories </h1>
-                <a href="{{route('category.create')}}"><button class="new ticket-btn">{{__('Create new category')}}</button></a>
+                <a href="{{route('categories.create')}}"><button class="new ticket-btn">{{__('Create new category')}}</button></a>
             </div>
             <div class="grid-item">
                 <a href="#" class="tab active" data-target="content1">Categories</a>
@@ -38,23 +39,26 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
+                                        <th>Tickets Num</th>
                                         <th>Date Created</th>
                                         <th>Action</th>
                                     </tr>
                                     <tbody>
                                         @foreach($categories as $row)
+                                            <?php $ticketCount = $row->tickets_count ?>
                                             <tr>
-                                                <td scope="row">{{$row->id }}</td>
+                                                <td >{{$row->id }}</td>
                                                 <td class="ticket-creator">{{$row->title}}</td>
+                                                <td class="ticket-creator">{{$ticketCount}}</td>
                                                 <td>{{$row->created_at}}</td>
                                                 <td>
-                                                    <a href="{{ route('category.edit', $row->id) }}"><button class="btn btn-primary " type="submit">Update</button></a>
-                                                    <form action="{{route('category.destroy',$row->id)}}" method="post">
+                                                    <a href="{{ route('categories.edit', $row->id) }}"><button class="btn btn-primary " type="submit">Update</button></a>
+                                                    <form action="{{route('categories.destroy',$row->id)}}" method="post">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <button class="btn btn-danger" onclick="return confirm('{{__('Are you sure you want to delete this row?')}}')"  type="submit">Delete</button>
+                                                        <button class="btn btn-danger" onclick="return confirm('{{__('Are you sure you want to delete this category?')}}')"  type="submit">Delete</button>
                                                     </form>
-                                                    <a href="{{route('category.destroy',$row->id)}}"></a>
+                                                    <a href="{{route('categories.destroy',$row->id)}}"></a>
                                                 </td>
                                             </tr>
                                     @endforeach

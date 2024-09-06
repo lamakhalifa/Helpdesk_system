@@ -4,7 +4,7 @@
     <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
     <script src="{{ asset('js/chart-area-demo.js') }}" defer></script>
     <h2>{{__('Edit User')}}</h2>
-    <form action="{{route('category.update',$categories->id)}}" method="post">
+    <form action="{{route('categories.update',$category->id)}}" method="post">
         @method('PATCH')
         @include('categories._form')
     </form>

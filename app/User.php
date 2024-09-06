@@ -17,8 +17,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
-        'role',
+//        'password',
+//        'role',
     ];
 
     /**
@@ -43,5 +43,8 @@ class User extends Authenticatable
         'agent_id' : 'customer_id';
 
         return $this->hasMany(Ticket::class, $column);
+    }
+    public function comments(){
+        return $this->hasMany(Comment::class, 'user_id');
     }
 }

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class category extends Model
+class Category extends Model
 {
     protected $fillable = [
         'title'
@@ -12,6 +12,6 @@ class category extends Model
 
     public function tickets()
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(Ticket::class);
     }
 }

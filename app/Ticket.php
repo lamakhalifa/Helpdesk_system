@@ -32,8 +32,9 @@ class Ticket extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function file() {
-        return $this->morphMany(File::class,'fileable');
+    public function comments(){
+        return $this->hasMany(Comment::class, 'ticket_id');
+
     }
 
 }
