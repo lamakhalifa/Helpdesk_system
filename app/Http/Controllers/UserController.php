@@ -50,20 +50,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => [
-            'required',
-            'string',
-            'min:8', 
-            'confirmed', 
-            'regex:/[a-z]/', 
-            'regex:/[A-Z]/',
-            'regex:/[0-9]/', 
-            'regex:/[@$!%*?&]/',
-        ],
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|email|unique:users,email',
+        //     'password' => [
+        //     'required',
+        //     'string',
+        //     'min:8', 
+        //     'confirmed', 
+        //     'regex:/[a-z]/', 
+        //     'regex:/[A-Z]/',
+        //     'regex:/[0-9]/', 
+        //     'regex:/[@$!%*?&]/',
+        // ],
+        // ]);
 
         User::create([
             'name' => $request['name'],

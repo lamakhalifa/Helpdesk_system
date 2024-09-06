@@ -61,13 +61,23 @@ class TicketController extends Controller
             return redirect()->back()->withErrors(['agent_email' => 'The user is not an agent.']);
         }
         // Create the ticket
-        Ticket::create([
+        $ticket = Ticket::create([
             'category_id' => $request->category_id,
             'title' => $request->title,
             'content' => $request->content,
             'customer_id' => $customer->id,
             'agent_id' => $agent->id,
         ]);
+        // dd($ticket, $request->file);
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $file) {
+                // dd($file);
+                // $path = $file->store('file'); 
+                // $ticket->images()->create(['path' => $path]);
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('files', $fileName, 'public');
+            }
+        }
 
         return redirect()->route('tickets.index')->with('success', 'Ticket created successfully');
     }
