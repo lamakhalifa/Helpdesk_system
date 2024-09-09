@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
 
 class HomeController extends Controller
 {
@@ -23,48 +22,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-        {
-
-        return view('dashboard');
-
-    }
-    public function AdminHome(Request $request)
     {
-    $roles = ['Admin', 'Customer','Agent'];
-    $users = User::paginate(10);
-    return view('home',compact('users','roles'));
-
-}
-
-public function UpdateProfile()
-{
-$user=auth()->user();
-return view('UpdateProfile',compact('user'));
-}
-
-//update profile photo
-// <<<<<<< Updated upstream
-//public function UpdateProfile(Request $request)
-//{
-//
-//return view('UpdateProfile',compact('user'));
-//}
-// =======
-// public function UpdateProfile(Request $request)
-// {
-// >>>>>>> Stashed changes
-
-// return view('UpdateProfile',compact('user'));
-// }
-
-//     public function store(Request $request){
-//         User::insert([
-//         //'id'=>$id,
-//         'role'=>$request->role,
-//         // 'modifiedBy'=> $request->modifiedBy,
-
-//         ]);
-
-//           return redirect()->route('ControlPanel');
-// }
+        return view('home');
+    }
 }

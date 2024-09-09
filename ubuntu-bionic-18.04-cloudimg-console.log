@@ -361,3 +361,4 @@ Begin: Loading essential drivers ... [   15.152348] raid6: sse2x1   gen()  5137 
 [   15.458783] raid6: .... xor() 4088 MB/s, rmw enabled
 [   15.471261] raid6: using ssse3x2 recovery algorithm
 [   15.490005] xor: measuring software checksum speed
+

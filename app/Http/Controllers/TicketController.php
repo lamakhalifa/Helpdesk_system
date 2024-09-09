@@ -20,9 +20,9 @@ class TicketController extends Controller
     public function index()
     {
         $user = auth()->user();
-    
+
         // Check if the user is authorized to view any tickets
-        $this->authorize('viewAny', Ticket::class); 
+        $this->authorize('viewAny', Ticket::class);
     
         if ($user->role === 'admin') {
             // Admins can view all tickets
@@ -33,18 +33,14 @@ class TicketController extends Controller
             $tickets = Ticket::where('agent_id', $user->id)
                              ->with(['customer', 'category', 'agent'])
                              ->paginate(50);
-        } else {
-            // Handle cases for other roles or deny access
-            abort(403, 'Unauthorized action.');
         }
-    
         return view('tickets.index', compact('tickets'));
     }
-    
+
 
     public function create()
     {
-        $this->authorize('create', Ticket::class); 
+        $this->authorize('create', Ticket::class);
 
         $cats = Category::latest()->get();
         return view('tickets.create', compact('cats'));
@@ -61,7 +57,7 @@ class TicketController extends Controller
     }
     public function store(Request $request)
     {
-        $this->authorize('create', Ticket::class); 
+        $this->authorize('create', Ticket::class);
         $this->validateTicket($request);
 
         // Find the customer and agent by their email addresses
@@ -89,7 +85,7 @@ class TicketController extends Controller
             'customer_id' => $customer->id,
             'agent_id' => $agent->id,
         ]);
-        // dd($ticket, $request->file);
+       
         if ($request->hasFile('file')) {
             foreach ($request->file('file') as $file) {
                 $ticket->addMedia($file)->toMediaCollection('images');
@@ -102,7 +98,7 @@ class TicketController extends Controller
 
     public function edit(Ticket $ticket)
     {
-        $this->authorize('update', $ticket);
+       $this->authorize('update', $ticket);
         $cats = Category::latest()->get();
         return view('tickets.edit', compact('ticket', 'cats'));
     }
@@ -110,7 +106,7 @@ class TicketController extends Controller
 
     public function update(Request $request, Ticket $ticket)
     {
-        $this->authorize('update', $ticket);
+       $this->authorize('update', $ticket);
         $this->validateTicket($request);
 
         // Find the customer and agent by their email addresses

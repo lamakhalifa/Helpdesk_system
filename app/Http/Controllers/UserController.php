@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -17,7 +16,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view', User::class);
+       $this->authorize('view', User::class);
 
         if ($request['role'] === 'agent') {
             $users = User::where('role', 'agent')->get();
@@ -50,7 +49,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate('create', User::class);
 
         $request->validate([
@@ -97,7 +95,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('update', $user);
+        //$this->authorize('update', $user);
         return view('users.update', compact('user'));
     }
 
