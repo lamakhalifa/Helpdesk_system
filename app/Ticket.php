@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Ticket extends Model
+class Ticket extends Model implements HasMedia
 {
 
-
+    use InteractsWithMedia ; 
     protected $fillable = [
         'title',
         'content',
@@ -35,6 +37,11 @@ class Ticket extends Model
     public function comments(){
         return $this->hasMany(Comment::class, 'ticket_id');
 
+    }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
     }
 
 }

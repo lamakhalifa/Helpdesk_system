@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\User;
 use App\Ticket;
+use App\File;
 use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Gate;
 
@@ -21,7 +22,7 @@ class TicketController extends Controller
         $user = auth()->user();
     
         // Check if the user is authorized to view any tickets
-        $this->authorize('viewAny', Ticket::class);
+        $this->authorize('viewAny', Ticket::class); 
     
         if ($user->role === 'admin') {
             // Admins can view all tickets
@@ -43,7 +44,7 @@ class TicketController extends Controller
 
     public function create()
     {
-        $this->authorize('create', Ticket::class);
+        $this->authorize('create', Ticket::class); 
 
         $cats = Category::latest()->get();
         return view('tickets.create', compact('cats'));
@@ -60,7 +61,7 @@ class TicketController extends Controller
     }
     public function store(Request $request)
     {
-        $this->authorize('create', Ticket::class);
+        $this->authorize('create', Ticket::class); 
         $this->validateTicket($request);
 
         // Find the customer and agent by their email addresses
@@ -91,11 +92,8 @@ class TicketController extends Controller
         // dd($ticket, $request->file);
         if ($request->hasFile('file')) {
             foreach ($request->file('file') as $file) {
-                // dd($file);
-                // $path = $file->store('file'); 
-                // $ticket->images()->create(['path' => $path]);
-                $fileName = time() . '.' . $file->getClientOriginalExtension();
-                $file->storeAs('files', $fileName, 'public');
+                $ticket->addMedia($file)->toMediaCollection('images');
+            
             }
         }
 
