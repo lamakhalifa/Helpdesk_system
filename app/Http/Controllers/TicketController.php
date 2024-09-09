@@ -23,7 +23,7 @@ class TicketController extends Controller
 
         // Check if the user is authorized to view any tickets
         $this->authorize('viewAny', Ticket::class);
-    
+
         if ($user->role === 'admin') {
             // Admins can view all tickets
             $tickets = Ticket::with(['customer', 'category', 'agent'])->paginate(50);
@@ -85,11 +85,14 @@ class TicketController extends Controller
             'customer_id' => $customer->id,
             'agent_id' => $agent->id,
         ]);
-       
+
         if ($request->hasFile('file')) {
             foreach ($request->file('file') as $file) {
                 $ticket->addMedia($file)->toMediaCollection('images');
-            
+
+
+
+
             }
         }
 
