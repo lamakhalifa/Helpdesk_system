@@ -18,8 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
 
-        Ticket::class => TicketPolicy::class,
-        User::class => UserPolicy::class,
+//        Ticket::class => TicketPolicy::class,
+//        User::class => UserPolicy::class,
     ];
 
     /**

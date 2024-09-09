@@ -34,9 +34,9 @@ class TicketPolicy
      */
     public function viewAny(User $user)
     {
-        return $this->isAdmin($user) || Ticket::where('agent_id', $user->id)->exists();
+        return $this->isAdmin($user) || $this->isAssignedAgent($user);
     }
-   
+
     /**
      * Determine if the user can view a specific ticket.
      *

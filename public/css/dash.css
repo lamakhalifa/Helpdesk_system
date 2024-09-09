@@ -1,5 +1,5 @@
 body {
-    background-color:#ebebeb; 
+    background-color:#ebebeb;
 }
 a:hover {
     text-decoration: none;
@@ -7,35 +7,38 @@ a:hover {
 
 .container-dash-page {
     display: grid;
-    grid-template-columns: 1fr 4fr; 
-    height: 100vh; 
+    grid-template-columns: 1fr 4fr;
+    height: 100vh;
+}
+.container {
+    width:100%;
 }
 
-.left-panel {
-    background-color: #0a3736; 
+.sidebar {
+    background-color: #0a3736;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    font-size: 15px;
+    font-size: 20px;
     color: white;
 }
-.left-panel div {
+.sidebar div {
     padding: 5px 15px;
 }
 
-.left-panel a {
+.sidebar a {
     text-decoration: none;
     display: inline-block;
     position: relative;
     color: white;
 }
 
-.left-panel a i {
+.sidebar a i {
     padding-right: 15px;
 }
 
 
-.left-panel .brand {
+.sidebar .brand {
     text-align: center;
     font-size: 2rem;
     font-weight: bolder;
@@ -44,14 +47,17 @@ a:hover {
 }
 .right-panel {
     display: grid;
-    grid-template-rows:  100px 50px 150px 1fr; 
+    grid-template-rows:  100px 50px 150px 1fr;
     gap: 10px;
-    height: 100vh; 
+    height: 100vh;
     font-size: 1.5em;
     padding: 20px;
     width: 79vw;
 }
+.navbar-nav {
+    margin-left: auto; /* Pushes the navbar items to the right */
 
+}
 .right-panel .grid-item , .grid-item3 , .grid-item4 , .grid-item5 {
 display: flex;
 position: relative;
@@ -120,7 +126,7 @@ width: 77vw;
  .item {
     flex: 1;
     padding-left: 10px;
-  
+
  }
 .grid-item5 {
     margin-top: 15px;
@@ -273,7 +279,7 @@ th ,td {
 
     @media (max-width: 431px) {
         .container-dash-page {
-            grid-template-columns: 1fr; 
+            grid-template-columns: 1fr;
             grid-template-rows: auto auto auto 1fr;
             gap: 0;
         }
@@ -289,7 +295,7 @@ th ,td {
             height: auto;
             position: relative;
         }
-    
+
         .right-panel {
             height: 124vh;
             width: 100vw;

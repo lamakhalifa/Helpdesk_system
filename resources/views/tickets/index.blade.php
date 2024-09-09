@@ -7,7 +7,7 @@
 
          <div class="col-md-12">
             <div class="card">
-                <div class="card-header text-center text-light">Tickets</div>
+                <div class="card-header text-center">Tickets</div>
 
                 <div class="card-body text-center">
 
