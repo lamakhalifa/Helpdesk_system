@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model implements HasMedia
 {
 
-
+    use SoftDeletes;
     protected $fillable = [
         'title',
         'content',
@@ -16,6 +17,7 @@ class Ticket extends Model implements HasMedia
         'agent_id',
     ];
 
+    protected $dates = ['delete_al'];
     public function customer()
     {
         return $this->belongsTo(User::class, 'customer_id');
