@@ -2,10 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Ticket extends Model implements HasMedia
 {
@@ -40,6 +41,11 @@ class Ticket extends Model implements HasMedia
     public function comments(){
         return $this->hasMany(Comment::class, 'ticket_id');
 
+    }
+
+    public function registerMediaConversions(Media $media = null): void {
+        $this->addMediaConversion('thumb')
+        -> width(100);
     }
 
 

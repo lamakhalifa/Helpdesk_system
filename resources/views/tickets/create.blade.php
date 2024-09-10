@@ -22,16 +22,18 @@
                         <div class="card-body text-left">
                             <div class="form-group">
                                 <label for="title">Ticket Title</label>
-                                <input type="text" class="form-control" name="title" placeholder="Ticket Title">
+                                <input type="text" class="form-control" name="title" id="title"
+                                    placeholder="Ticket Title">
                             </div>
                             <div class="form-group">
                                 <label for="content">Content</label>
-                                <textarea class="form-control" name="content"></textarea>
+                                <textarea class="form-control" id="content" name="content"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="customer_email">Customer</label>
                                 <input type="text" class="form-control @error('customer_email') is-invalid @enderror"
-                                    name="customer_email" placeholder="Customer Email" value="{{ old('customer_email') }}">
+                                    name="customer_email" id="customer_email" placeholder="Customer Email"
+                                    value="{{ old('customer_email') }}">
                                 @error('customer_email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -43,7 +45,8 @@
 
 
                                 <input type="text" class="form-control @error('agent_email') is-invalid @enderror"
-                                    name="agent_email" placeholder="Agent Email" value="{{ old('agent_email') }}">
+                                    name="agent_email" id="agent_email" placeholder="Agent Email"
+                                    value="{{ old('agent_email') }}">
                                 @error('agent_email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -63,8 +66,11 @@
                                     </select>
 
                                     <div class="form-group">
-                                        <label for="title">Upload file</label>
-                                        <input type="file" class="form-control" name="file[]" multiple>
+                                        <label for="files">Upload file</label>
+                                        <input type="file" class="form-control" id="files" name="files[]" multiple>
+                                        @error('files')
+                                            <div class="error">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group text-center mt-3">
@@ -77,4 +83,3 @@
         </div>
     </div>
 @endsection
-
