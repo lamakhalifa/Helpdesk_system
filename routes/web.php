@@ -43,5 +43,7 @@ Route::resource('tickets', 'TicketController');
 
 //Category Routes
 Route::resource('categories', 'CategoryController');
+//Comment Routes
+Route::resource('tickets.comments', 'CommentController');
 
 

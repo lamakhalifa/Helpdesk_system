@@ -31,8 +31,8 @@ class TicketController extends Controller
 
             // Agents can only view tickets assigned to them
             $tickets = Ticket::where('agent_id', $user->id)
-                             ->with(['customer', 'category', 'agent'])
-                             ->paginate(50);
+                ->with(['customer', 'category', 'agent'])
+                ->paginate(50);
         }
         return view('tickets.index', compact('tickets'));
     }
@@ -46,13 +46,16 @@ class TicketController extends Controller
         return view('tickets.create', compact('cats'));
     }
 
-    private function validateTicket(Request $request){
+    private function validateTicket(Request $request)
+    {
         return $request->validate([
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|min:3|max:40',
             'content' => 'required|string|min:3|max:500',
             'customer_email' => 'required|email|exists:users,email',
             'agent_email' => 'required|email|exists:users,email',
+            'files' => 'array',
+            'files.*' => 'file|mimes:jpg,jpeg,png,gif,txt,pdf,doc,docx|max:2048',
         ]);
     }
     public function store(Request $request)
@@ -77,6 +80,7 @@ class TicketController extends Controller
         if (!in_array($agent->role, ['agent', 'admin'])) {
             return redirect()->back()->withErrors(['agent_email' => 'The user is not an agent.']);
         }
+        
         // Create the ticket
         $ticket = Ticket::create([
             'category_id' => $request->category_id,
@@ -86,13 +90,18 @@ class TicketController extends Controller
             'agent_id' => $agent->id,
         ]);
 
-        if ($request->hasFile('file')) {
-            foreach ($request->file('file') as $file) {
-                $ticket->addMedia($file)->toMediaCollection('images');
+        //upload files
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $fileExtension = strtolower($file->getClientOriginalExtension());
+                $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif','webp'];
+                $allowedTextExtensions = ['txt', 'doc', 'docx', 'pdf'];
 
-
-
-
+                if (in_array($fileExtension, $allowedImageExtensions)) {
+                    $ticket->addMedia($file)->toMediaCollection('images');
+                } elseif (in_array($fileExtension, $allowedTextExtensions)) {
+                    $ticket->addMedia($file)->toMediaCollection('texts');
+                } 
             }
         }
 
@@ -101,7 +110,7 @@ class TicketController extends Controller
 
     public function edit(Ticket $ticket)
     {
-       $this->authorize('update', $ticket);
+        $this->authorize('update', $ticket);
         $cats = Category::latest()->get();
         return view('tickets.edit', compact('ticket', 'cats'));
     }
@@ -109,7 +118,7 @@ class TicketController extends Controller
 
     public function update(Request $request, Ticket $ticket)
     {
-       $this->authorize('update', $ticket);
+        $this->authorize('update', $ticket);
         $this->validateTicket($request);
 
         // Find the customer and agent by their email addresses
