@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // use App\Http\Controllers\UserController;
@@ -31,7 +32,7 @@ Route::get('/customers', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('users', 'UserController');
 
@@ -44,6 +45,5 @@ Route::resource('tickets', 'TicketController');
 Route::resource('categories', 'CategoryController');
 //Comment Routes
 Route::resource('tickets.comments', 'CommentController');
-
 
 
