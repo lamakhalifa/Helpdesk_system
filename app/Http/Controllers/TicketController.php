@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comment;
 use App\User;
 use App\Ticket;
 use App\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 //use Illuminate\Support\Facades\Gate;
 
 
@@ -80,7 +83,7 @@ class TicketController extends Controller
         if (!in_array($agent->role, ['agent', 'admin'])) {
             return redirect()->back()->withErrors(['agent_email' => 'The user is not an agent.']);
         }
-        
+
         // Create the ticket
         $ticket = Ticket::create([
             'category_id' => $request->category_id,
@@ -101,7 +104,7 @@ class TicketController extends Controller
                     $ticket->addMedia($file)->toMediaCollection('images');
                 } elseif (in_array($fileExtension, $allowedTextExtensions)) {
                     $ticket->addMedia($file)->toMediaCollection('texts');
-                } 
+                }
             }
         }
 
@@ -158,6 +161,31 @@ class TicketController extends Controller
     {
         $this->authorize('view', $ticket);
         return view('tickets.details', compact('ticket'));
+    }
+
+    public function createComment(User $user,Ticket $ticket): bool
+    {
+        return $user->can('view', $ticket);
+    }
+    public function storeComment(Request $request,Ticket $ticket)
+    {
+        $this->authorize('create',  $ticket);
+        $request['user_id']=Auth::id();
+//        $request['ticket_id']=$ticket_id;
+//        $ticket = Ticket::find($ticket_id);
+        //validate input
+        $request->validate([
+            'content' => 'required|string|max:200'
+        ]);
+        // create new comment after validate input
+        $user=$request->user_id;
+        Comment::create([
+            'user_id'=>$request->user_id,
+            'ticket_id'=>$ticket->id,
+            'content' => $request['content']
+        ]);
+        return redirect()->back();
+        //return $user->can('view', $ticket);
     }
 
 }
