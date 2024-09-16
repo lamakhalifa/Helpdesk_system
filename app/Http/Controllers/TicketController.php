@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comment;
 use App\User;
 use App\Ticket;
+use App\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 //use Illuminate\Support\Facades\Gate;
 
 
@@ -19,10 +23,10 @@ class TicketController extends Controller
     public function index()
     {
         $user = auth()->user();
-    
+
         // Check if the user is authorized to view any tickets
         $this->authorize('viewAny', Ticket::class);
-    
+
         if ($user->role === 'admin') {
             // Admins can view all tickets
             $tickets = Ticket::with(['customer', 'category', 'agent'])->paginate(50);
@@ -30,16 +34,12 @@ class TicketController extends Controller
 
             // Agents can only view tickets assigned to them
             $tickets = Ticket::where('agent_id', $user->id)
-                             ->with(['customer', 'category', 'agent'])
-                             ->paginate(50);
-        } else {
-            // Handle cases for other roles or deny access
-            abort(403, 'Unauthorized action.');
+                ->with(['customer', 'category', 'agent'])
+                ->paginate(50);
         }
-    
         return view('tickets.index', compact('tickets'));
     }
-    
+
 
     public function create()
     {
@@ -49,13 +49,16 @@ class TicketController extends Controller
         return view('tickets.create', compact('cats'));
     }
 
-    private function validateTicket(Request $request){
+    private function validateTicket(Request $request)
+    {
         return $request->validate([
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|min:3|max:40',
             'content' => 'required|string|min:3|max:500',
             'customer_email' => 'required|email|exists:users,email',
             'agent_email' => 'required|email|exists:users,email',
+            'files' => 'array',
+            'files.*' => 'file|mimes:jpg,jpeg,png,gif,txt,pdf,doc,docx|max:2048',
         ]);
     }
     public function store(Request $request)
@@ -80,14 +83,30 @@ class TicketController extends Controller
         if (!in_array($agent->role, ['agent', 'admin'])) {
             return redirect()->back()->withErrors(['agent_email' => 'The user is not an agent.']);
         }
+
         // Create the ticket
-        Ticket::create([
+        $ticket = Ticket::create([
             'category_id' => $request->category_id,
             'title' => $request->title,
             'content' => $request->content,
             'customer_id' => $customer->id,
             'agent_id' => $agent->id,
         ]);
+
+        //upload files
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $fileExtension = strtolower($file->getClientOriginalExtension());
+                $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif','webp'];
+                $allowedTextExtensions = ['txt', 'doc', 'docx', 'pdf'];
+
+                if (in_array($fileExtension, $allowedImageExtensions)) {
+                    $ticket->addMedia($file)->toMediaCollection('images');
+                } elseif (in_array($fileExtension, $allowedTextExtensions)) {
+                    $ticket->addMedia($file)->toMediaCollection('texts');
+                }
+            }
+        }
 
         return redirect()->route('tickets.index')->with('success', 'Ticket created successfully');
     }
@@ -142,6 +161,31 @@ class TicketController extends Controller
     {
         $this->authorize('view', $ticket);
         return view('tickets.details', compact('ticket'));
+    }
+
+    public function createComment(User $user,Ticket $ticket): bool
+    {
+        return $user->can('view', $ticket);
+    }
+    public function storeComment(Request $request,Ticket $ticket)
+    {
+        $this->authorize('create',  $ticket);
+        $request['user_id']=Auth::id();
+//        $request['ticket_id']=$ticket_id;
+//        $ticket = Ticket::find($ticket_id);
+        //validate input
+        $request->validate([
+            'content' => 'required|string|max:200'
+        ]);
+        // create new comment after validate input
+        $user=$request->user_id;
+        Comment::create([
+            'user_id'=>$request->user_id,
+            'ticket_id'=>$ticket->id,
+            'content' => $request['content']
+        ]);
+        return redirect()->back();
+        //return $user->can('view', $ticket);
     }
 
 }

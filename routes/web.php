@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // use App\Http\Controllers\UserController;
@@ -42,6 +43,8 @@ Route::resource('tickets', 'TicketController');
 
 //Category Routes
 Route::resource('categories', 'CategoryController');
-
+//Comment Routes
+Route::post('tickets/{ticket}', 'TicketController@storeComment')->name('tickets.storeComment');
+Route::delete('{comment}', 'CommentController@destroy')->name('comments.destroy');
 
 

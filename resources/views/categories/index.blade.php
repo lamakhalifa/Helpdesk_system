@@ -1,77 +1,54 @@
-@php use App\Ticket; @endphp
+
 @extends('layouts.app')
 @section('content')
-    <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/chart-area-demo.js') }}" defer></script>
-    <div class="container-dash-page">
-        <div class="left-panel">
-            <div class="brand">
-                HelpPro
-            </div>
-            <div>
-                <a href="#"><i class="fa-regular fa-comments"></i>Tickets</a>
-            </div>
-            <div>
-                <a href="#"> <i class="fa-regular fa-user"></i>Customers</a>
-            </div>
-            <div>
-                <a href="#"> <i class="fa-solid fa-user-tie"></i> Agents</a>
-            </div>
-            <div>
-                <a href="{{ route('home') }}"> <i class="fa fa-cogs"></i> Home</a>
-            </div>
-        </div>
-        <div class="right-panel">
-            <div class="grid-item">
-                <h1>Categories </h1>
-                <a href="{{route('categories.create')}}"><button class="new ticket-btn">{{__('Create new category')}}</button></a>
-            </div>
-            <div class="grid-item">
-                <a href="#" class="tab active" data-target="content1">Categories</a>
-                <!--a href="#" class="tab" data-target="content2">Users</a-->
-            </div>
-            <div class="content" id="content1">
-                <div class="grid-item5">
-                    <div class="wrapper">
-                        <div class="table-contaier">
-                            @if(count($categories)>0)
-                                <table>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card pt-0">
+                    <div class="card-header text-center text-light">Tickets</div>
+                    <div class="card-body text-center">
+                        @if(count($categories)>0)
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Tickets Num</th>
+                                    <th scope="col">Date Created</th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($categories as $row)
+                                    <?php $ticketCount = $row->tickets_count ?>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Tickets Num</th>
-                                        <th>Date Created</th>
-                                        <th>Action</th>
+                                        <td>{{$row->id }}</td>
+                                        <td>{{$row->title}}</td>
+                                        <td>{{$ticketCount}}</td>
+                                        <td>{{$row->created_at}}</td>
+                                        <td><a href="{{ route('categories.edit', $row->id) }}"><button class="btn btn-primary " type="submit">Update</button></a></td>
+                                        <td>
+                                            <form action="{{route('categories.destroy',$row->id)}}" method="post">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="btn btn-danger" onclick="return confirm('{{__('Are you sure you want to delete this category?')}}')"  type="submit">Delete</button>
+                                            </form>
+                                            <a href="{{route('categories.destroy',$row->id)}}"></a>
+                                        </td>
                                     </tr>
-                                    <tbody>
-                                        @foreach($categories as $row)
-                                            <?php $ticketCount = $row->tickets_count ?>
-                                            <tr>
-                                                <td >{{$row->id }}</td>
-                                                <td class="ticket-creator">{{$row->title}}</td>
-                                                <td class="ticket-creator">{{$ticketCount}}</td>
-                                                <td>{{$row->created_at}}</td>
-                                                <td>
-                                                    <a href="{{ route('categories.edit', $row->id) }}"><button class="btn btn-primary " type="submit">Update</button></a>
-                                                    <form action="{{route('categories.destroy',$row->id)}}" method="post">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button class="btn btn-danger" onclick="return confirm('{{__('Are you sure you want to delete this category?')}}')"  type="submit">Delete</button>
-                                                    </form>
-                                                    <a href="{{route('categories.destroy',$row->id)}}"></a>
-                                                </td>
-                                            </tr>
-                                    @endforeach
+                                @endforeach
                                 @else
-                                    <p>No Categories Yet</p>
+                                    <p>{{__('No Categories Yet')}}</p>
                             @endif
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <a  href="{{ route('categories.create')}}" class="btn btn-primary m-3">{{__('Add new category')}}</a>
                     </div>
                 </div>
             </div>
-
+        </div>
     </div>
-
 @endsection
