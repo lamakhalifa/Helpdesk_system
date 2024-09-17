@@ -45,6 +45,6 @@ Route::resource('tickets', 'TicketController');
 Route::resource('categories', 'CategoryController');
 //Comment Routes
 Route::post('tickets/{ticket}', 'TicketController@storeComment')->name('tickets.storeComment');
-Route::delete('{comment}', 'CommentController@destroy')->name('comments.destroy');
+Route::delete('comments/{comment}', 'CommentController@destroy')->name('comments.destroy');
 
 
