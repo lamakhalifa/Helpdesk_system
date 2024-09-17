@@ -19,7 +19,7 @@ class CommentPolicy
     public function delete(User $user, Comment $comment): bool
     {
         $lastCommentId =Comment::where('ticket_id', $comment->ticket_id)->latest()->first()->id;
-        return ($this->isAdmin($user) || ($user->id === $comment->user_id) && ($lastCommentId === $comment->id)) ;
+        return ($this->isAdmin($user) || ($user->id === $comment->user_id && $lastCommentId === $comment->id)) ;
     }
 
 

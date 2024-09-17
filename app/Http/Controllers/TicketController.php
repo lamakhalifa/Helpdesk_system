@@ -163,29 +163,17 @@ class TicketController extends Controller
         return view('tickets.details', compact('ticket'));
     }
 
-    public function createComment(User $user,Ticket $ticket): bool
-    {
-        return $user->can('view', $ticket);
-    }
     public function storeComment(Request $request,Ticket $ticket)
     {
         $this->authorize('create',  $ticket);
-        $request['user_id']=Auth::id();
-//        $request['ticket_id']=$ticket_id;
-//        $ticket = Ticket::find($ticket_id);
-        //validate input
         $request->validate([
             'content' => 'required|string|max:200'
         ]);
-        // create new comment after validate input
-        $user=$request->user_id;
-        Comment::create([
-            'user_id'=>$request->user_id,
+        auth()->user()->comments()->create([
             'ticket_id'=>$ticket->id,
             'content' => $request['content']
         ]);
         return redirect()->back();
-        //return $user->can('view', $ticket);
     }
 
 }
