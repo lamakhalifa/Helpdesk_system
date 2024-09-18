@@ -16,4 +16,12 @@
     <div>
         <a href="#"><i class="fa fa-cogs"></i> Control Panel</a>
     </div>
+    <div>
+        <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+            @csrf 
+            <button type="submit" class="logout-btn">
+                <i class="fa-solid fa-user-tie"></i> Logout
+            </button>
+        </form>        
+    </div>
 </div>

@@ -1,14 +1,15 @@
 @extends('layouts.app')
-
+<link href="{{ asset('css/login.css') }}" rel="stylesheet">
 @section('content')
-<div class="container">
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
+                    {{ route('password.update') }}
+                    <form method="POST" action="">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">
@@ -61,5 +62,19 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
+
+<div class="grad"></div>
+    <form method="POST" action="{{ route('password.update') }}">
+        @csrf
+        <input type="hidden" name="token" value="{{ $token }}">
+        <div class="box confirm-box">
+            <div class="card-header">{{ __('Reset Password') }}</div>
+            <label for="password" class="confirm">Please confirm your password before continuing</label>
+            <input id="password" type="password" placeholder="password"
+                class="form-control @error('password') is-invalid @enderror" name="password" required
+                autocomplete="current-password">
+            <input type="button" value="Confirm Password">
+        </div>
+    </form>
 @endsection

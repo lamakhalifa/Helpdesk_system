@@ -30,11 +30,6 @@ Route::get('/customers', function () {
     return view('customers');
 });
 
-Route::get('/login', function () {
-    return view('auth/register');
-});
-
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/login', 'Auth\LoginController@login');
@@ -47,6 +42,8 @@ Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::resource('users', 'UserController');
 
 //Ticket Routes
@@ -55,4 +52,9 @@ Route::resource('users', 'UserController');
 Route::resource('tickets', 'TicketController');
 
 //Category Routes
+
 Route::resource('categories', 'CategoryController');
+Route::resource('categories', 'CategoryController');
+//Comment Routes
+Route::post('tickets/{ticket}', 'TicketController@storeComment')->name('tickets.storeComment');
+Route::delete('comments/{comment}', 'CommentController@destroy')->name('comments.destroy');

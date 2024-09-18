@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comment;
 use App\User;
 use App\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 //use Illuminate\Support\Facades\Gate;
 
 
@@ -92,7 +95,8 @@ class TicketController extends Controller
         //upload files
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                $ticket->addMedia($file)->toMediaCollection('files'); 
+                $storageType = env('FILES_STORAGE');
+                $ticket->addMedia($file)->toMediaCollection('files',$storageType); 
             }
         }
 
@@ -149,6 +153,19 @@ class TicketController extends Controller
     {
         $this->authorize('view', $ticket);
         return view('tickets.details', compact('ticket'));
+    }
+
+    public function storeComment(Request $request,Ticket $ticket)
+    {
+        $this->authorize('create',  $ticket);
+        $request->validate([
+            'content' => 'required|string|max:200'
+        ]);
+        auth()->user()->comments()->create([
+            'ticket_id'=>$ticket->id,
+            'content' => $request['content']
+        ]);
+        return redirect()->back();
     }
 
 }
