@@ -21,7 +21,7 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-require '/home/vagrant/site/vendor/autoload.php';
+require '../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------

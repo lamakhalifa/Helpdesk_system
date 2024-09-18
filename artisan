@@ -15,7 +15,7 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-require '/home/vagrant/site/vendor/autoload.php';
+require 'vendor/autoload.php';
 
 $app = require_once __DIR__.'/bootstrap/app.php';
 
