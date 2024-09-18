@@ -21,7 +21,25 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-require __DIR__.'/../vendor/autoload.php';
+$vendorPaths = [
+    '/home/vagrant/site/vendor/autoload.php',
+    '../vendor/autoload.php'
+];
+$defaultVendorPath = '';
+if(file_exists('../dev.txt')){
+    $handle = fopen('../dev.txt', 'r');
+    if($handle){
+        $content = trim(fread($handle, filesize('../dev.txt')));
+        fclose($handle);
+        if($content === 'lama'){
+            $defaultVendorPath = $vendorPaths[0];
+            require $vendorPaths[0];
+        }else{
+            $defaultVendorPath = $vendorPaths[1];
+            require $vendorPaths[1];
+        }
+    }
+}
 
 /*
 |--------------------------------------------------------------------------
