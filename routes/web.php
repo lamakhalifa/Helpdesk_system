@@ -23,16 +23,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/Dashboard', function () {
-    return view('Dashboard');
+    return view('dashboard');
 });
 
 Route::get('/customers', function () {
     return view('customers');
 });
 
-Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/login', 'Auth\LoginController@login');
+
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+
+Route::post('/register', 'Auth\RegisterController@register')->name('register');
+
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
+
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('users', 'UserController');
 
@@ -42,8 +52,9 @@ Route::resource('users', 'UserController');
 Route::resource('tickets', 'TicketController');
 
 //Category Routes
+
+Route::resource('categories', 'CategoryController');
 Route::resource('categories', 'CategoryController');
 //Comment Routes
-Route::resource('tickets.comments', 'CommentController');
-
-
+Route::post('tickets/{ticket}', 'TicketController@storeComment')->name('tickets.storeComment');
+Route::delete('comments/{comment}', 'CommentController@destroy')->name('comments.destroy');

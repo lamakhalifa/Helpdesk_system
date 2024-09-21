@@ -34,5 +34,5 @@
         </div>
 
         <div class="form-group">
-            <button class="ticket-btn left-zaro" type="submit">{{ __('Save') }}</button>
+            <button class="ticket-btn left-42" type="submit">{{ __('Save') }}</button>
         </div>

@@ -7,8 +7,9 @@ a:hover {
 
 .container-dash-page {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 0fr 4fr;
     height: 100vh;
+    align-items: center;
 }
 .container {
     width:100%;
@@ -21,6 +22,7 @@ a:hover {
     justify-content: flex-start;
     font-size: 20px;
     color: white;
+    height: 100vh;
 }
 .sidebar div {
     padding: 5px 15px;
@@ -31,6 +33,16 @@ a:hover {
     display: inline-block;
     position: relative;
     color: white;
+}
+
+.logout-btn {
+    background:#ebebeb; 
+    border:none; 
+
+    border-radius: 5px;
+    padding: 5px 10px;
+    position: relative;
+    color: black;
 }
 
 .sidebar a i {
@@ -47,7 +59,8 @@ a:hover {
 }
 .right-panel {
     display: grid;
-    grid-template-rows:  100px 50px 150px 1fr;
+    /* grid-template-rows:  100px 50px 150px 1fr; */
+    grid-template-rows: 100px 50px 15px 1fr;
     gap: 10px;
     height: 100vh;
     font-size: 1.5em;
@@ -151,7 +164,7 @@ width: 77vw;
 }
 
 .content {
-    width: 77vw;
+    width: 75vwvw;
 }
 .wrapper {
     width: min(900px, 100% - 3rem);
@@ -266,6 +279,17 @@ th ,td {
   .left-zero{
     left: 0;
   }
+
+  .left-42{
+    left: 42vw;
+  }
+
+  .bg-form{
+    background-color: #bb9d9d47;
+    padding: 30px;
+    border-radius: 5px;
+  }
+
   .btn-danger{
     margin-left: 5px;
   }

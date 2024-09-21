@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-       $this->authorize('view', User::class);
+       $this->authorize('viewAny', User::class);
 
         if ($request['role'] === 'agent') {
             $users = User::where('role', 'agent')->get();
@@ -49,8 +49,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate('create', User::class);
-
+        // $this->validate('create', User::class);
+      
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -95,7 +95,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //$this->authorize('update', $user);
+        $this->authorize('update', $user);
         return view('users.update', compact('user'));
     }
 

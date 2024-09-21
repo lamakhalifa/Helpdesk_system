@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comment;
 use App\User;
 use App\Ticket;
-use App\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 //use Illuminate\Support\Facades\Gate;
 
 
@@ -80,7 +82,7 @@ class TicketController extends Controller
         if (!in_array($agent->role, ['agent', 'admin'])) {
             return redirect()->back()->withErrors(['agent_email' => 'The user is not an agent.']);
         }
-        
+
         // Create the ticket
         $ticket = Ticket::create([
             'category_id' => $request->category_id,
@@ -93,15 +95,8 @@ class TicketController extends Controller
         //upload files
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                $fileExtension = strtolower($file->getClientOriginalExtension());
-                $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif','webp'];
-                $allowedTextExtensions = ['txt', 'doc', 'docx', 'pdf'];
-
-                if (in_array($fileExtension, $allowedImageExtensions)) {
-                    $ticket->addMedia($file)->toMediaCollection('images');
-                } elseif (in_array($fileExtension, $allowedTextExtensions)) {
-                    $ticket->addMedia($file)->toMediaCollection('texts');
-                } 
+                $storageType = env('FILES_STORAGE');
+                $ticket->addMedia($file)->toMediaCollection('files',$storageType); 
             }
         }
 
@@ -158,6 +153,19 @@ class TicketController extends Controller
     {
         $this->authorize('view', $ticket);
         return view('tickets.details', compact('ticket'));
+    }
+
+    public function storeComment(Request $request,Ticket $ticket)
+    {
+        $this->authorize('create',  $ticket);
+        $request->validate([
+            'content' => 'required|string|max:200'
+        ]);
+        auth()->user()->comments()->create([
+            'ticket_id'=>$ticket->id,
+            'content' => $request['content']
+        ]);
+        return redirect()->back();
     }
 
 }
