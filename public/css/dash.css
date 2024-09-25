@@ -22,7 +22,7 @@ a:hover {
     justify-content: flex-start;
     font-size: 20px;
     color: white;
-    height: 100vh;
+    height: 100%;
 }
 .sidebar div {
     padding: 5px 15px;
@@ -36,8 +36,8 @@ a:hover {
 }
 
 .logout-btn {
-    background:#ebebeb; 
-    border:none; 
+    background:#ebebeb;
+    border:none;
 
     border-radius: 5px;
     padding: 5px 10px;
