@@ -6,8 +6,8 @@
             <label for="content"></label>
             <textarea class="form-control" placeholder="{{__('Type your comment here...')}}" name="content" id="content" cols="10" rows="5"></textarea>
         </div>
-        <div class="form-group text-center">
-            <button class="btn btn-success mt-4" type="submit">{{__('Save')}}</button>
+        <div class="form-group">
+            <button class="ticket-btn left-42 mt-4" type="submit">{{__('Save')}}</button>
         </div>
     </form>
 </div>
