@@ -58,7 +58,7 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "vendor-dir": "/home/vagrant/site/vendor",
+        "vendor-dir": "vendor",
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
