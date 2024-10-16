@@ -5,62 +5,75 @@ namespace App\Http\Controllers\Api;
 use App\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Task;
+
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function __construct()
     {
-        //
+        $this->middleware('auth:api');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function store(Request $request){
+
+        $validatedData = $request->validate([
+            'ticket_id' => 'required',
+            'content' => 'required'
+        ]);
+
+        $ticket = Ticket::findOrFail($request->ticket_id);
+
+        if(auth()->id() != $ticket->user_id){
+            return response()->json(['message' => 'You are not the task owner'], 401);
+        }
+
+        $request['user_id'] = auth()->id();
+
+        $comment = $task->comments()->create($request->all());
+
+        if($comment){
+            return $comment;
+        }
+
+        return response()->json(['message' => 'Error, try again later'], 500);
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function update(Request $request, Comment $comment){
+
+        $validatedData = $request->validate([
+            'content' => 'required'
+        ]);
+
+        if(auth()->id() != $comment->user_id){
+            return response()->json(['message' => 'you can not update this comment'], 401);
+        }
+
+        $updated = $comment->update($validatedData);
+
+        if($updated){
+            return ['message' => 'Updated successfully'];
+        }
+
+        return response()->json(['message' => 'Error, try again later'], 500);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Comment $comment)
-    {
-        //
+    public function destroy(Comment $comment){
+
+        if(auth()->id() != $comment->user_id){
+            return response()->json(['message' => 'you dont have permission to delete this comment'], 401);
+        }
+
+        if($comment->delete()){
+            return ['message' => 'The comment has been Deleted successfully'];
+        }
+
+
+        return response()->json(['message' => 'Error, try again later'], 500);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Comment $comment)
-    {
-        //
-    }
 }

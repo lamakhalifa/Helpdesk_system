@@ -21,5 +21,5 @@ Route::middleware('auth:api')->prefix('user')->group(function() {
    Route::patch('updateProfile', 'Api\UserController@updateProfile');
 });
 
-
+Route::resource('comments','Api\CommentController');
 //Route:: api resources?
