@@ -18,7 +18,7 @@ Route::post('register', 'Api\AuthController@register');
 Route::post('login', 'Api\AuthController@login');
 Route::post('forgetPassword', 'Api\UserController@resetPassword');
 Route::middleware('auth:api')->prefix('user')->group(function() {
-    Route::patch('updateProfile', 'Api\UserController@updateProfile');
+   Route::patch('updateProfile', 'Api\UserController@updateProfile');
 });
 
 
