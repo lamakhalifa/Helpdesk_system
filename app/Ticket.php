@@ -19,6 +19,7 @@ class Ticket extends Model implements HasMedia
         'customer_id',
         'category_id',
         'agent_id',
+        'status',
     ];
 
     protected $dates = ['delete_al'];
