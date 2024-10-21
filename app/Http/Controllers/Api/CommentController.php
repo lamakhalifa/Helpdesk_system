@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Task;
+use App\Ticket;
 
 
 class CommentController extends Controller
