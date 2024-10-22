@@ -17,21 +17,22 @@ class CommentController extends Controller
     }
 
     public function store(Request $request){
-
+     
         $validatedData = $request->validate([
             'ticket_id' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'user_id' => 'required'
         ]);
 
         $ticket = Ticket::findOrFail($request->ticket_id);
 
-        if(auth()->id() != $ticket->user_id){
+        if(auth()->id() != $ticket->customer_id){
             return response()->json(['message' => 'You are not the task owner'], 401);
         }
 
         $request['user_id'] = auth()->id();
 
-        $comment = $task->comments()->create($request->all());
+        $comment = $ticket->comments()->create($request->all());
 
         if($comment){
             return $comment;
@@ -42,7 +43,7 @@ class CommentController extends Controller
     }
 
     public function update(Request $request, Comment $comment){
-
+       
         $validatedData = $request->validate([
             'content' => 'required'
         ]);
@@ -61,8 +62,7 @@ class CommentController extends Controller
     }
 
     public function destroy(Comment $comment){
-
-        if(auth()->id() != $comment->user_id){
+        if(auth()->id() != $comment->user_id){     
             return response()->json(['message' => 'you dont have permission to delete this comment'], 401);
         }
 
