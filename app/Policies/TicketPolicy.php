@@ -26,6 +26,15 @@ class TicketPolicy
         return $user->id === $ticket->agent_id; // Assuming 'agent_id' is the field in Ticket model that stores the agent ID
     }
 
+    private function isOwner(User $user, Ticket $ticket)
+    {
+        return $user->id === $ticket->customer_id; // Assuming 'user_id' is the field in Ticket model that stores the owner ID
+    }
+    private function isCustomer(User $user)
+    {
+        return $user->role === 'customer'; // Check if user's role is 'customer'
+    }
+
     /**
      * Determine if the user can view any tickets.
      *
@@ -34,7 +43,7 @@ class TicketPolicy
      */
     public function viewAny(User $user)
     {
-        return $this->isAdmin($user) || $this->isAssignedAgent($user);
+        return $this->isAdmin($user) || $this->isAssignedAgent($user) ;
     }
 
     /**
@@ -46,7 +55,12 @@ class TicketPolicy
      */
     public function view(User $user, Ticket $ticket)
     {
-        return $this->isAdmin($user) || $this->isAssignedAgent($user, $ticket);
+    
+        if ($this->isAdmin($user) || $this->isAssignedAgent($user, $ticket)) {
+            return Ticket::all(); 
+        }
+
+        return $request->user()->tickets;
     }
 
     /**
@@ -57,7 +71,7 @@ class TicketPolicy
      */
     public function create(User $user)
     {
-        return $this->isAdmin($user);
+        return $this->isAdmin($user) || $this->isCustomer($user);
     }
 
     /**
@@ -69,7 +83,7 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket)
     {
-        return $this->isAdmin($user) || $this->isAssignedAgent($user, $ticket);
+        return $this->isAdmin($user) || $this->isAssignedAgent($user, $ticket) || $this->isOwner($user, $ticket);
     }
 
     /**
@@ -81,6 +95,11 @@ class TicketPolicy
      */
     public function delete(User $user, Ticket $ticket)
     {
-        return $this->isAdmin($user);
+        return $this->isAdmin($user) || $this->isOwner($user, $ticket);
+    }
+
+    public function close(User $user, Ticket $ticket)
+    {
+        return $this->isAdmin($user) || $this->isOwner($user, $ticket) || $this->isAssignedAgent($user, $ticket);
     }
 }
