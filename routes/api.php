@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+// use App\Http\Controllers\Api\TicketController;
+use App\Http\Controllers\Api\TicketController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +27,7 @@ Route::middleware('auth:api')->prefix('user')->group(function() {
 
 Route::resource('comments','Api\CommentController');
 //Route:: api resources?
+
+Route::resource('tickets','Api\TicketController');
+Route::patch('/tickets/{id}/close', [TicketController::class, 'closeTicket']);
+
