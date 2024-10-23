@@ -21,21 +21,31 @@ class CommentController extends Controller
         $validatedData = $request->validate([
             'ticket_id' => 'required',
             'content' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'files' => 'array',
+            'files.*' => 'file|mimes:jpg,jpeg,png,gif,txt,pdf,doc,docx|max:2048'
         ]);
 
         $ticket = Ticket::findOrFail($request->ticket_id);
 
         if(auth()->id() != $ticket->customer_id){
-            return response()->json(['message' => 'You are not the task owner'], 401);
+            return response()->json(['message' => 'You are not the ticket owner'], 401);
         }
 
         $request['user_id'] = auth()->id();
 
         $comment = $ticket->comments()->create($request->all());
-
+        
+            //upload files
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    $storageType = env('FILES_STORAGE');
+                    $ticket->addMedia($file)->toMediaCollection('files',$storageType); 
+                }
+       }
+    
         if($comment){
-            return $comment;
+            return response()->json($comment->load('media'), 201);
         }
 
         return response()->json(['message' => 'Error, try again later'], 500);
