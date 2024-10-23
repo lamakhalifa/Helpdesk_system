@@ -30,5 +30,7 @@ Route::post('comments/{comment}/upload-files', 'Api\CommentController@uploadFile
 //Route:: api resources?
 
 Route::resource('tickets','Api\TicketController');
+Route::post('tickets/{ticket}/upload-files', 'Api\TicketController@uploadFiles');
+
 Route::patch('/tickets/{id}/close', [TicketController::class, 'closeTicket']);
 

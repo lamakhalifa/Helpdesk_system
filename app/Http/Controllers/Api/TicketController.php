@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Comment;
 use App\User;
+use App\Http\Resources\FileResource;
 
 class TicketController extends Controller
 {
@@ -82,16 +83,28 @@ class TicketController extends Controller
             'agent_id' => $agent->id,
         ]);
 
-        //upload files
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file) {
-                $storageType = env('FILES_STORAGE');
-                $ticket->addMedia($file)->toMediaCollection('files',$storageType); 
-            }
-        }
+        // //upload files
+        // if ($request->hasFile('files')) {
+        //     foreach ($request->file('files') as $file) {
+        //         $storageType = env('FILES_STORAGE');
+        //         $ticket->addMedia($file)->toMediaCollection('files',$storageType); 
+        //     }
+        // }
 
     }
 
+    public function uploadFiles(Ticket $ticket){
+        if (request()->hasFile('files')) {
+            $uploadedFiles = [];
+            foreach (request()->file('files') as $file) {
+                $storageType = env('FILES_STORAGE');
+                $uploadedFile = $ticket->addMedia($file)->toMediaCollection('files',$storageType); 
+                $uploadedFiles[] = $uploadedFile;
+            }
+            return FileResource::collection($uploadedFiles);
+        }
+
+    }
     /**
      * Display the specified resource.
      */
