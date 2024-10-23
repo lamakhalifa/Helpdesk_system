@@ -21,13 +21,12 @@ use App\Http\Controllers\Api\TicketController;
 Route::post('register', 'Api\AuthController@register');
 Route::post('login', 'Api\AuthController@login');
 Route::post('forgetPassword', 'Api\UserController@resetPassword');
-Route::middleware('auth:api')->prefix('user')->group(function() {
-   Route::patch('updateProfile', 'Api\UserController@updateProfile');
-});
+Route::patch('updateProfile', 'Api\UserController@updateProfile');
+Route::get('resetByToken', 'Api\AuthController@checkToken');
 
 Route::resource('comments','Api\CommentController');
 Route::post('comments/{comment}/upload-files', 'Api\CommentController@uploadFiles');
-//Route:: api resources?
+
 
 Route::resource('tickets','Api\TicketController');
 Route::patch('/tickets/{id}/close', [TicketController::class, 'closeTicket']);
