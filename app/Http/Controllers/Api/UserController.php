@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+
 
 class UserController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth:api');
+    }
+
     public function updateProfile(Request $request)
     {
         $user = auth()->user();
@@ -17,26 +21,21 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string',
             'password_confirmation' => 'required|string|same:password',
-            'avatar' => 'path',
+            'avatar' => 'array',
+            'avatar.*' => 'file|mimes:jpg,jpeg,png,gif,txt,pdf,doc,docx|max:2048',
         ]);
+        //upload files
+        if ($request->hasFile('avatar')) {
+            foreach ($request->file('avatar') as $avatar) {
+                $storageType = env('FILES_STORAGE');
+                $validatedData['avatar']->addMedia($avatar)->toMediaCollection('avatar',$storageType);
+            }
+        }
         $validatedData['password']=Hash::make($validatedData['password']);
         $user->update($validatedData);
         if($user->save())
             return response()->json(['message' => 'Profile updated successfully']);
         else
             return response()->json(['message' => 'Profile update failed'],status: 500);
-    }
-
-    public function resetPassword(Request $request){
-        $validatedData = $request->validate([
-            'email' => 'required|email|exists:users,email',
-        ]);
-        $userEmail='f@g.com';
-        Mail::send([],[],function($message) use($userEmail){
-            $message->subject('Reset Password');
-            $message->to($userEmail);
-            $message->setBody('your new password is jjj');
-        });
-
     }
 }
