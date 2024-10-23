@@ -6,6 +6,7 @@ use App\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Ticket;
+use App\Http\Resources\FileResource;
 
 
 class CommentController extends Controller
@@ -37,18 +38,26 @@ class CommentController extends Controller
         $comment = $ticket->comments()->create($request->all());
         
             //upload files
-            if ($request->hasFile('files')) {
-                foreach ($request->file('files') as $file) {
-                    $storageType = env('FILES_STORAGE');
-                    $ticket->addMedia($file)->toMediaCollection('files',$storageType); 
-                }
-       }
+            
     
         if($comment){
-            return response()->json($comment->load('media'), 201);
+            return response()->json($comment, 201);
         }
 
         return response()->json(['message' => 'Error, try again later'], 500);
+
+    }
+
+    public function uploadFiles(Comment $comment){
+        if (request()->hasFile('files')) {
+            $uploadedFiles = [];
+            foreach (request()->file('files') as $file) {
+                $storageType = env('FILES_STORAGE');
+                $uploadedFile = $comment->addMedia($file)->toMediaCollection('files',$storageType); 
+                $uploadedFiles[] = $uploadedFile;
+            }
+            return FileResource::collection($uploadedFiles);
+        }
 
     }
 

@@ -26,6 +26,7 @@ Route::middleware('auth:api')->prefix('user')->group(function() {
 });
 
 Route::resource('comments','Api\CommentController');
+Route::post('comments/{comment}/upload-files', 'Api\CommentController@uploadFiles');
 //Route:: api resources?
 
 Route::resource('tickets','Api\TicketController');
