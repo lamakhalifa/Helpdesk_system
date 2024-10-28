@@ -20,27 +20,7 @@ define('LARAVEL_START', microtime(true));
 | loading any of our classes later on. It feels great to relax.
 |
 */
-
-$vendorPaths = [
-    '/home/vagrant/site/vendor/autoload.php',
-    '../vendor/autoload.php'
-];
-$defaultVendorPath = '';
-if(file_exists('../dev.txt')){
-    $handle = fopen('../dev.txt', 'r');
-    if($handle){
-        $content = trim(fread($handle, filesize('../dev.txt')));
-        fclose($handle);
-        if($content === 'lama'){
-            $defaultVendorPath = $vendorPaths[0];
-            require $vendorPaths[0];
-        }else{
-            $defaultVendorPath = $vendorPaths[1];
-            require $vendorPaths[1];
-        }
-    }
-}
-
+require '../vendor/autoload.php';
 /*
 |--------------------------------------------------------------------------
 | Turn On The Lights
