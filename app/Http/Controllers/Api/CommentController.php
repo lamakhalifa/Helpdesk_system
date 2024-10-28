@@ -18,7 +18,7 @@ class CommentController extends Controller
     }
 
     public function store(Request $request){
-     
+
         $validatedData = $request->validate([
             'ticket_id' => 'required',
             'content' => 'required',
@@ -36,10 +36,10 @@ class CommentController extends Controller
         $request['user_id'] = auth()->id();
 
         $comment = $ticket->comments()->create($request->all());
-        
+
             //upload files
-            
-    
+
+
         if($comment){
             return response()->json($comment, 201);
         }
@@ -49,11 +49,14 @@ class CommentController extends Controller
     }
 
     public function uploadFiles(Comment $comment){
+
+        $this->authorize('view', $comment);
+
         if (request()->hasFile('files')) {
             $uploadedFiles = [];
             foreach (request()->file('files') as $file) {
                 $storageType = env('FILES_STORAGE');
-                $uploadedFile = $comment->addMedia($file)->toMediaCollection('files',$storageType); 
+                $uploadedFile = $comment->addMedia($file)->toMediaCollection('files',$storageType);
                 $uploadedFiles[] = $uploadedFile;
             }
             return FileResource::collection($uploadedFiles);
@@ -62,7 +65,7 @@ class CommentController extends Controller
     }
 
     public function update(Request $request, Comment $comment){
-       
+
         $validatedData = $request->validate([
             'content' => 'required'
         ]);
@@ -81,7 +84,7 @@ class CommentController extends Controller
     }
 
     public function destroy(Comment $comment){
-        if(auth()->id() != $comment->user_id){     
+        if(auth()->id() != $comment->user_id){
             return response()->json(['message' => 'you dont have permission to delete this comment'], 401);
         }
 
